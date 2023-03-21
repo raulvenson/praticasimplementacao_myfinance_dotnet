@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Relatório de Transações por Período";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<input type="date" class="form-control" id="date1" name="date1">
+<input type="date" class="form-control" id="date2" name="date2">
+<button type="button" class="btn btn-primary btn-lg" onclick="Buscar()">Registrar Transações</button>
+
+<hr>
+
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Data</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Valor</th>
+            <th scope="col">Descricao</th>
+            <th scope="col">Plano Conta</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var item in (List<TransacaoModel>)@ViewBag.Relatorio)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Data</td>
+                    <td>@(item.ItemPlanoConta.Tipo == "D" ? "Despesa" : "Receita")</td>
+                    <td>@item.Valor</td>
+                    <td>@item.Historico</td>
+                    <td>@item.ItemPlanoConta.Descricao</td>
+                </tr>
+            }
+        }
+    </tbody>
+
+
+</table>
+
+<script>
+    function Buscar() {
+        window.location.href = "../Relatorio/Filtrar/" + date1 "/" + date2
+    }
+
+</script>
